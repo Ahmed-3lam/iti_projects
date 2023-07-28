@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iti_projects/const.dart';
 
@@ -9,16 +11,27 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  String image = "assets/images/background1.png";
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    Timer(
+        const Duration(seconds: 2),
+            () => _changeImage()
+    );
     return Scaffold(
       body: Stack(
         children: [
           SizedBox(
               width: double.infinity,
               child: Image.asset(
-                "assets/images/background1.png",
+                image,
                 fit: BoxFit.fill,
               )),
           Container(
@@ -51,23 +64,26 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           Positioned(
-              bottom: 20,
-              left: 20,
-              child: Column(
-                children: [
-                  _buildButton(
-                    text: "Continue with Email or Phone",
-                    textColor: Colors.white,
-                    btnColor: primaryColor,
-                  ),
-                  const SizedBox(height: 20,),
-                  _buildButton(
-                    text: "Create an account",
-                    textColor: Colors.black,
-                    btnColor: Colors.white,
-                  ),
-                ],
-              ),)
+            bottom: 20,
+            left: 20,
+            child: Column(
+              children: [
+                _buildButton(
+                  text: "Continue with Email or Phone",
+                  textColor: Colors.white,
+                  btnColor: primaryColor,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                _buildButton(
+                  text: "Create an account",
+                  textColor: Colors.black,
+                  btnColor: Colors.white,
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -90,4 +106,14 @@ class _AuthScreenState extends State<AuthScreen> {
       )),
     );
   }
+
+  void _changeImage() {
+    if(image=="assets/images/background1.png"){
+      image = "assets/images/background2.png";
+    }else{
+      image = "assets/images/background1.png";
+    }
+    setState(() {});
+  }
+
 }

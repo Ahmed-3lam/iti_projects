@@ -15,28 +15,31 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
     super.initState();
-
-    ///Splash 1
-    if (isSplashFinished == 1) {
+    /// Splash 1
+    if (widget.image=="assets/images/logo.png") {
       ///time 3 seconds
       Timer(
         const Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SplashScreen(
-              image: "assets/images/splash2.png",
-              color: Colors.white,
+        () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (BuildContext context) => const SplashScreen(
+                image: "assets/images/splash2.png",
+                color: Colors.white,
+              ),
             ),
-          ),
-        ),
-      );
+
+          );
+          } );
+
     }
 
-    //Splash2
-    if (isSplashFinished == 2) {
+    ///Splash2
+    if (widget.image=="assets/images/splash2.png") {
       Timer(
           const Duration(seconds: 3),
           () => Navigator.of(context).pushReplacement(
@@ -46,8 +49,11 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     }
 
-    isSplashFinished = 2;
+
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
