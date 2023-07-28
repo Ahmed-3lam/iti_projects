@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iti_projects/model/user_message_model.dart';
+import 'package:iti_projects/basic_projects/model/user_message_model.dart';
 
 Widget buildChatItem({
   required String name,

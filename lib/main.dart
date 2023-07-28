@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iti_projects/view/home_screen.dart';
-import 'package:iti_projects/view/login_screen.dart';
-import 'package:iti_projects/view/messanger_chats_screen.dart';
+import 'package:iti_projects/ecommerce/screens/splash_screen.dart';
 
-import 'view/chat_screen.dart';
 
 
 void main() {
@@ -24,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-home: MessangerChatsScreen(),
+home: SplashScreen(image: "assets/images/logo.png",color: Color(0xFF40AA54),),
     );
   }
 }
