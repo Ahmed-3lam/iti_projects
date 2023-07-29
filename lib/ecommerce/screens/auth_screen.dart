@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iti_projects/const.dart';
+import 'package:iti_projects/ecommerce/screens/login_screen.dart';
+import 'package:iti_projects/ecommerce/widget/build_btn.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -16,15 +18,11 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    Timer(
-        const Duration(seconds: 2),
-            () => _changeImage()
-    );
+    Timer(const Duration(seconds: 2), () => _changeImage());
     return Scaffold(
       body: Stack(
         children: [
@@ -68,7 +66,14 @@ class _AuthScreenState extends State<AuthScreen> {
             left: 20,
             child: Column(
               children: [
-                _buildButton(
+                buildButton(
+                  onTap: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
                   text: "Continue with Email or Phone",
                   textColor: Colors.white,
                   btnColor: primaryColor,
@@ -76,10 +81,11 @@ class _AuthScreenState extends State<AuthScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                _buildButton(
+                buildButton(
                   text: "Create an account",
                   textColor: Colors.black,
                   btnColor: Colors.white,
+
                 ),
               ],
             ),
@@ -89,31 +95,14 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  Widget _buildButton({
-    required String text,
-    required Color textColor,
-    required Color btnColor,
-  }) {
-    return Container(
-      height: 56,
-      width: 374,
-      decoration: BoxDecoration(
-          color: btnColor, borderRadius: BorderRadius.circular(20)),
-      child: Center(
-          child: Text(
-        text,
-        style: TextStyle(color: textColor, fontSize: 16),
-      )),
-    );
-  }
+
 
   void _changeImage() {
-    if(image=="assets/images/background1.png"){
+    if (image == "assets/images/background1.png") {
       image = "assets/images/background2.png";
-    }else{
+    } else {
       image = "assets/images/background1.png";
     }
     setState(() {});
   }
-
 }
