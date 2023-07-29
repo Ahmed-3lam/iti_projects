@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iti_projects/const.dart';
 import 'package:iti_projects/ecommerce/screens/auth_screen.dart';
+import 'package:iti_projects/ecommerce/screens/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   final String image;
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
           const Duration(seconds: 3),
           () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (BuildContext context) => const AuthScreen()),
+                    builder: (BuildContext context) => OnboardingScreen(num: 1,)),
               ),
       );
     }

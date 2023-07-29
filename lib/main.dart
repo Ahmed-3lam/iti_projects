@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iti_projects/ecommerce/screens/onboarding_screen.dart';
 import 'package:iti_projects/ecommerce/screens/splash_screen.dart';
 
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-home: SplashScreen(image: "assets/images/logo.png",color: Color(0xFF40AA54),),
+home:
+SplashScreen(image: "assets/images/logo.png",color: Color(0xFF40AA54),),
     );
   }
 }
