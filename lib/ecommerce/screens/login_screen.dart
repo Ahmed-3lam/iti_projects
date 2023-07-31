@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:iti_projects/const.dart';
 import 'package:iti_projects/ecommerce/main/view/main_screen.dart';
 import 'package:iti_projects/ecommerce/widget/build_btn.dart';
@@ -165,19 +166,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         _form.currentState!.validate();
 
-                        if(_phoneController.text=="01113024425"&&_passwordController.text=="123456"){
+                        if (_phoneController.text == "01113024425" &&
+                            _passwordController.text == "123456") {
+                          Get.offAll(MainScreen());
 
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) => MainScreen(),
-                            ),
-                                (route) => false,//if you want to disable back feature set to false
-                          );
+                          // Navigator.pushAndRemoveUntil(
+                          //   context,
+                          //   MaterialPageRoute<dynamic>(
+                          //     builder: (BuildContext context) => MainScreen(),
+                          //   ),
+                          //       (route) => false,//if you want to disable back feature set to false
+                          // );
 
                           setState(() {});
                         }
-
                       },
                     ),
                     const SizedBox(
@@ -297,3 +299,25 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+
+/// Stateless & stateful
+/// Ui : Container , SizeBox , Row , Column .......
+/// Navigation
+/// Packages & plugin
+/// Validation TextField
+/// MVC : MODEL - View- Controller
+
+
+/// Database
+
+/// Localization ( Translations )
+
+/// State Management ( Provider , Bloc , getx , mob , riverpod ),
+///
+
+/// SharedPrefernce
+/// Restful Api
+
+
+

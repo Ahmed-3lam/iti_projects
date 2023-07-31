@@ -14,7 +14,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final _mainController =MainController();
+  int selectedIndex=0;
 
+  final List<Widget> screenList=[
+    HomeScreen(),
+    const AuthScreen(),
+    const  LoginScreen(),
+    Container(color: Colors.red,)
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (index){
           _mainController.selectedIndex=index;
           setState(() {
-          });
+          },);
         },
 
       ),

@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:iti_projects/const.dart';
-import 'package:iti_projects/ecommerce/screens/auth_screen.dart';
+import 'package:get/get.dart';
 import 'package:iti_projects/ecommerce/screens/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,37 +19,50 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-
-
     /// Splash 1
-    if (widget.image=="assets/images/logo.png") {
+    if (widget.image == "assets/images/logo.png") {
       ///time 3 seconds
-      Timer(
-        const Duration(seconds: 3),
-        () {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (BuildContext context) => const SplashScreen(
-                image: "assets/images/splash2.png",
-                color: Colors.white,
-              ),
-            ),
+      Timer(const Duration(seconds: 3), () {
+        Get.offAll(
+          const SplashScreen(
+            image: "assets/images/splash2.png",
+            color: Colors.white,
+          ),
+        );
 
-          );
-          } );
-
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (BuildContext context) => const SplashScreen(
+        //       image: "assets/images/splash2.png",
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        //
+        // );
+      });
     }
 
     ///Splash2
-    if (widget.image=="assets/images/splash2.png") {
+    if (widget.image == "assets/images/splash2.png") {
       Timer(
-          const Duration(seconds: 3),
-          () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                  builder: (BuildContext context) => OnboardingScreen(num: 1,)),
-            );
-          },
+        const Duration(seconds: 3),
+        () {
+          Get.offAll(
+            OnboardingScreen(
+              num: 1,
+            ),
+            curve: Curves.bounceInOut,
+            duration: Duration(
+              seconds:2,
+            ),
+          );
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(
+          //       builder: (BuildContext context) => OnboardingScreen(
+          //             num: 1,
+          //           )),
+          // );
+        },
       );
     }
   }

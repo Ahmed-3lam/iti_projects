@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iti_projects/const.dart';
 import 'package:iti_projects/ecommerce/screens/login_screen.dart';
 import 'package:iti_projects/ecommerce/widget/build_btn.dart';
@@ -68,11 +70,12 @@ class _AuthScreenState extends State<AuthScreen> {
               children: [
                 buildButton(
                   onTap: (){
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    );
+                    Get.to(const LoginScreen());
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const LoginScreen(),
+                    //   ),
+                    // );
                   },
                   text: "Continue with Email or Phone",
                   textColor: Colors.white,
