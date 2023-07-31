@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iti_projects/basic_projects/view/home_screen.dart';
-import 'package:iti_projects/ecommerce/screens/home_screen.dart';
-import 'package:iti_projects/ecommerce/screens/splash_screen.dart';
+import 'package:iti_projects/ecommerce/main/view/main_screen.dart';
 
+import 'package:iti_projects/ecommerce/screens/splash_screen.dart';
 
 
 void main() {
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
    home:
-        HomeScreen(),
+MainScreen()
 // SplashScreen(image: "assets/images/logo.png",color: Color(0xFF40AA54),),
     );
   }

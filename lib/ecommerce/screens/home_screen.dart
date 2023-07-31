@@ -2,37 +2,31 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iti_projects/ecommerce/product_details/product_details_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: _buildAppBar(),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        items:const [
-          Icon(Icons.home, size: 30),
-          Icon(Icons.shopping_cart, size: 30),
-          Icon(Icons.person, size: 30),
-          Icon(Icons.settings, size: 30),
-        ],
-
-      ),
-
-
-
-
-
-
-
-
-
-
-
-
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -91,93 +85,102 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _productItem() {
-    return Container(
-      height: 205,
-      width: 184,
-      margin: const EdgeInsets.only(right: 20,),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey.withOpacity(.2),
+    return InkWell(
+      onTap: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const ProductDetailsScreen(),
+          ),
+        );
+      },
+      child: Container(
+        height: 205,
+        width: 184,
+        margin: const EdgeInsets.only(right: 20,),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey.withOpacity(.2),
+          ),
+          borderRadius: BorderRadius.circular(20),
         ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Image.asset(
-            "assets/images/product1.png",
-            height: 90,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Row(
-            children: [
-              Text(
-                "Bundle Pack",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            children: [
-              Container(
-                width: 140,
-                child: const Text(
-                  "hggggggggkkkkkkkkkkkkkgggggggggg",
+        child: Column(
+          children: [
+            Image.asset(
+              "assets/images/product1.png",
+              height: 90,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Row(
+              children: [
+                Text(
+                  "Bundle Pack",
                   style: TextStyle(
-                    overflow: TextOverflow.ellipsis,
-                    fontSize: 14,
-                    color: Colors.grey,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Row(
-            children: [
-              Text(
-                "\$35",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              Text(
-                "50.32",
-                style: TextStyle(
-                  decoration: TextDecoration.lineThrough,
-                  fontSize: 12,
-                ),
-              ),
-              Spacer(),
-              InkWell(
-                onTap: null,
-                child: CircleAvatar(
-                  backgroundColor: Colors.green,
-                  radius: 14,
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
+              ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 140,
+                  child: const Text(
+                    "hggggggggkkkkkkkkkkkkkgggggggggg",
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              )
-            ],
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Row(
+              children: [
+                Text(
+                  "\$35",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                Text(
+                  "50.32",
+                  style: TextStyle(
+                    decoration: TextDecoration.lineThrough,
+                    fontSize: 12,
+                  ),
+                ),
+                Spacer(),
+                InkWell(
+                  onTap: null,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.green,
+                    radius: 14,
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

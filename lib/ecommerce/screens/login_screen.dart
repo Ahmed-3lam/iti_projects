@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_projects/const.dart';
+import 'package:iti_projects/ecommerce/main/view/main_screen.dart';
 import 'package:iti_projects/ecommerce/widget/build_btn.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -29,65 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _key,
-      appBar: AppBar(
-        leading: InkWell(
-          onTap: () {
-            _key.currentState!.openDrawer();
-          },
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(image1),
-          ),
-        ),
-      ),
-      drawer: Drawer(
-        child: ListView(children: [
-          Container(
-            child: DrawerHeader(
-              child: Container(
-                child: Image.network(
-                  image1,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            child: Column(
-              children: [
-                ListTile(
-                    title: Text("Ahmed"),
-                    leading: Icon(Icons.info),
-                    onTap: () {
-                      setState(() {});
-                    }),
-                new ListTile(
-                    title: Text("Ahmed"),
-                    leading: new Icon(Icons.save),
-                    onTap: () {
-                      setState(() {});
-                    }),
-                new ListTile(
-                    title: Text("Ahmed"),
-                    leading: new Icon(Icons.settings),
-                    onTap: () {
-                      setState(() {});
-                    }),
-              ],
-            ),
-          ),
-        ]),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-
-        type: BottomNavigationBarType.fixed,
-        currentIndex:2,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.archive),label: "Archive"),
-          BottomNavigationBarItem(icon: Icon(Icons.person),label: "Person"),
-
-        ],
-      ),
       body: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
         child: Padding(
@@ -221,7 +163,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       textColor: Colors.white,
                       btnColor: primaryColor,
                       onTap: () {
-                        setState(() {});
+                        _form.currentState!.validate();
+
+                        if(_phoneController.text=="01113024425"&&_passwordController.text=="123456"){
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) => MainScreen(),
+                            ),
+                                (route) => false,//if you want to disable back feature set to false
+                          );
+
+                          setState(() {});
+                        }
+
                       },
                     ),
                     const SizedBox(

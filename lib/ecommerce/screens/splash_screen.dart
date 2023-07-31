@@ -16,10 +16,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
+
+
+
     /// Splash 1
     if (widget.image=="assets/images/logo.png") {
       ///time 3 seconds
@@ -43,18 +45,15 @@ class _SplashScreenState extends State<SplashScreen> {
     if (widget.image=="assets/images/splash2.png") {
       Timer(
           const Duration(seconds: 3),
-          () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (BuildContext context) => OnboardingScreen(num: 1,)),
-              ),
+          () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (BuildContext context) => OnboardingScreen(num: 1,)),
+            );
+          },
       );
     }
-
-
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,3 +69,11 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+/// Navigation
+/// (1) push: screen 1 >>> screen2
+/// back : screen2 >>> screen1
+
+/// (2)push replacment
+/// push replac: screen1>> screen2
+/// back:screen1 not found again
