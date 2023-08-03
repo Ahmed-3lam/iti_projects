@@ -60,7 +60,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     setState(() {});
                   } else {
                     Get.offAll(const AuthScreen());
-
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //       builder: (BuildContext context) =>  AuthScreen()
@@ -78,4 +77,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
     );
   }
+
+
+
+  /// milli : 1300 height:
+/// top: Height *.02 ..
+/// halwany: 1500 height
+/// top:20 milli
+/// Responsive
+/// Height *.02
 }

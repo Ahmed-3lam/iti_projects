@@ -82,6 +82,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
+
+
 /// Navigation
 /// (1) push: screen 1 >>> screen2
 /// back : screen2 >>> screen1
