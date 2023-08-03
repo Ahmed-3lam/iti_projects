@@ -16,7 +16,6 @@ class _NoteScreenState extends State<NoteScreen> {
   @override
   void initState() {
     HiveHelper.getNotes(_refresh);
-
     super.initState();
   }
 
@@ -160,4 +159,7 @@ class _NoteScreenState extends State<NoteScreen> {
       ],
     );
   }
+
+
+
 }
