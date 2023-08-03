@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_projects/note/hive/hive_helper.dart';
 
@@ -10,31 +11,32 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> {
   final _textFieldController = TextEditingController();
+  final _textFieldController2 = TextEditingController();
 
   @override
   void initState() {
     HiveHelper.getNotes(_refresh);
+
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void _refresh() {
+    setState(() {});
   }
 
-  
-void _refresh(){
-    setState(() {
-
-    });
-}
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          leading: IconButton(
+        onPressed: () {
+          HiveHelper.clearAllNotes(_refresh);
+        },
+        icon: Icon(CupertinoIcons.delete),
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          _textFieldController.text = "";
           await showDialog(
             context: context,
             builder: (context) {
@@ -67,20 +69,21 @@ void _refresh(){
         },
         child: Icon(Icons.add),
       ),
-      body:
-      HiveHelper.notes.isEmpty?Center(child: CircularProgressIndicator(),):
-
-      ListView.separated(
-        itemCount: HiveHelper.notes.length,
-        padding: EdgeInsets.all(20),
-        separatorBuilder: (context, index) => SizedBox(
-          height: 20,
-        ),
-        itemBuilder: (context, index) => _buildNoteItem(
-          text: HiveHelper.notes[index],
-          index: index,
-        ),
-      ),
+      body: HiveHelper.notes.isEmpty
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.separated(
+              itemCount: HiveHelper.notes.length,
+              padding: EdgeInsets.all(20),
+              separatorBuilder: (context, index) => SizedBox(
+                height: 20,
+              ),
+              itemBuilder: (context, index) => _buildNoteItem(
+                text: HiveHelper.notes[index],
+                index: index,
+              ),
+            ),
     );
   }
 
@@ -90,27 +93,70 @@ void _refresh(){
   }) {
     return Stack(
       children: [
-        Container(
-          height: 200,
-          width: 300,
-          color: Colors.green,
-          child: Center(
-              child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 30,
-            ),
-          )),
-        ),
         InkWell(
-            onTap: () {
-             HiveHelper.removeNote(index);
-              _refresh();
-            },
-            child: Icon(
-              Icons.delete,
-              color: Colors.red,
-            ))
+          onTap: () async {
+            _textFieldController2.text = HiveHelper.notes[index];
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('TextField in Dialog'),
+                  content: TextField(
+                    controller: _textFieldController2,
+                    decoration:
+                        InputDecoration(hintText: "Text Field in Dialog"),
+                  ),
+                  actions: [
+                    MaterialButton(
+                      child: Text('CANCEL'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    MaterialButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        HiveHelper.update(
+                            index, _textFieldController2.text, _refresh);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            ).then((value) => setState(() {}));
+          },
+          child: Container(
+            height: 300,
+            width: 400,
+            decoration: BoxDecoration(
+                color: index == 0
+                    ? Colors.red.withOpacity(.3)
+                    : index % 2 == 0
+                        ? Colors.amber.withOpacity(.2)
+                        : Colors.green.withOpacity(.2),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            )),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: InkWell(
+              onTap: () {
+                HiveHelper.removeNote(index);
+                _refresh();
+              },
+              child: Icon(
+                Icons.delete,
+                color: Colors.red,
+              )),
+        )
       ],
     );
   }
