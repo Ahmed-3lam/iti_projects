@@ -14,7 +14,7 @@ class LanguageCubit extends Cubit<LanguageState> {
   void changeLanguage() {
     if (local == Locale("ar")) {
       local = Locale("en");
-    } else {
+    }else {
       local = Locale("ar");
     }
     emit(LanguageChangedState());

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:iti_projects/api_test/my_home_screen.dart';
 import 'package:iti_projects/bmi/cubit/bmi_cubit.dart';
+import 'package:iti_projects/ecommerce/screens/splash_screen.dart';
 import 'package:iti_projects/language_cubit/language_cubit.dart';
 import 'package:iti_projects/note/cubit/note_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -32,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -41,25 +45,26 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => BmiCubit(),
-          ),
+        ),
         BlocProvider(
           create: (context) => NoteCubit(),
         ),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
-          return MaterialApp(
+          return GetMaterialApp(
               title: 'Flutter Demo',
               locale: context.read<LanguageCubit>().local,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               debugShowCheckedModeBanner: false,
-              theme: ThemeData.dark().copyWith(
-                scaffoldBackgroundColor: Color(0xFF0A0E21),
-                primaryColor: Color(0xFF0A0E21),
-                textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
-              ),
-              home: BMICalculator());
+              // theme: ThemeData.dark().copyWith(
+              //   scaffoldBackgroundColor: Color(0xFF0A0E21),
+              //   primaryColor: Color(0xFF0A0E21),
+              //   textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+              // ),
+              home: SplashScreen(image: "assets/images/logo.png",color: Color(0xFF40AA54),),
+          );
         },
       ),
     );

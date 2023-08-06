@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iti_projects/const.dart';
 import 'package:iti_projects/ecommerce/main/view/main_screen.dart';
+import 'package:iti_projects/ecommerce/network/http_client.dart';
 import 'package:iti_projects/ecommerce/widget/build_btn.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,7 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       key: _key,
       body: GestureDetector(
-        onTap: FocusScope.of(context).unfocus,
+        onTap: FocusScope
+            .of(context)
+            .unfocus,
         child: Padding(
           padding: const EdgeInsets.only(
             top: 100.0,
@@ -100,9 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         suffixIcon: isCorrect
                             ? Icon(Icons.check_box)
                             : Icon(
-                                Icons.dangerous,
-                                color: Colors.red,
-                              ),
+                          Icons.dangerous,
+                          color: Colors.red,
+                        ),
                         border: _buildOutlineInputBorder(),
                         focusedBorder: _buildOutlineInputBorder(),
                         enabledBorder: _buildOutlineInputBorder(),
@@ -163,23 +166,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: "Login",
                       textColor: Colors.white,
                       btnColor: primaryColor,
-                      onTap: () {
-                        _form.currentState!.validate();
+                      onTap: () async{
+                        // _form.currentState!.validate();
 
-                        if (_phoneController.text == "01113024425" &&
-                            _passwordController.text == "123456") {
-                          Get.offAll(MainScreen());
+                        await HttpClientHelper().login(email: _phoneController.text,
+                          password: _passwordController.text,);
 
-                          // Navigator.pushAndRemoveUntil(
-                          //   context,
-                          //   MaterialPageRoute<dynamic>(
-                          //     builder: (BuildContext context) => MainScreen(),
-                          //   ),
-                          //       (route) => false,//if you want to disable back feature set to false
-                          // );
+                        // Get.offAll(MainScreen());
 
-                          setState(() {});
-                        }
+
+                        setState(() {});
                       },
                     ),
                     const SizedBox(

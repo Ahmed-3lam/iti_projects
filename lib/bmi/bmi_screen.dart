@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:iti_projects/bmi/cubit/bmi_cubit.dart';
 import 'package:iti_projects/language_cubit/language_cubit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BMICalculator extends StatefulWidget {
+  const BMICalculator({super.key});
+
   @override
   _BMICalculatorState createState() => _BMICalculatorState();
 }
