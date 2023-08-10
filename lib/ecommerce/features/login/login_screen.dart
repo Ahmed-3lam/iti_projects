@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iti_projects/const.dart';
-import 'package:iti_projects/ecommerce/network/dio_helper.dart';
+import 'package:iti_projects/ecommerce/features/login/cubit/login_cubit.dart';
 import 'package:iti_projects/ecommerce/widget/build_btn.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -151,30 +152,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    isLoading
-                        ? CircularProgressIndicator()
-                        : buildButton(
-                            text: "Login",
-                            textColor: Colors.white,
-                            btnColor: primaryColor,
-                            onTap: () async {
-                              
-                              isLoading = true;
-                              setState(() {});
-                              if (_form.currentState!.validate()) {
-                                await DioHelper().login(
+                    BlocBuilder<LoginCubit, LoginState>(
+                      builder: (context, state) {
+                        if (state is LoginLoadingState) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        return buildButton(
+                          text: "Login",
+                          textColor: Colors.white,
+                          btnColor: primaryColor,
+                          onTap: () async {
+                            if (_form.currentState!.validate()) {
+                              await context.read<LoginCubit>().login(
                                   email: _phoneController.text,
-                                  password: _passwordController.text,
-                                );
-                              }
+                                  password: _passwordController.text);
+                            }
 
-                              isLoading = false;
-
-                              // Get.offAll(MainScreen());
-
-                              setState(() {});
-                            },
-                          ),
+                            // Get.offAll(MainScreen());
+                          },
+                        );
+                      },
+                    ),
                     const SizedBox(
                       height: 50,
                     ),

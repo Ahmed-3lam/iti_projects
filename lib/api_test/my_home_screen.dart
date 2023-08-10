@@ -67,6 +67,9 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
     final response = await client.get(url);
 
     final myData = json.decode(response.body) as List;
+    print(
+        myData.toString()
+    );
 
     //
     // for (var item in myData) {
@@ -78,7 +81,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
 
     apiList = myData.map((item) => PostModel.fromJson(item)).toList();
 
-    developer.log(apiList.toString());
+    // developer.log(apiList.toString());
     isLoading = false;
     setState(() {});
   }

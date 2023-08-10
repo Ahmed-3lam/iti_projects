@@ -1,83 +1,49 @@
-import 'dart:convert';
-import 'dart:developer' as developer;
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:iti_projects/api_test/model/PostModel.dart';
-import 'package:iti_projects/ecommerce/main/view/main_screen.dart';
-
-import 'model/LoginModel.dart';
 
 class DioHelper {
   static Dio? dio;
+  static Map<String, dynamic> headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+  };
 
   static init() {
     dio = Dio(BaseOptions(
       baseUrl: 'https://student.valuxapps.com/api/',
       receiveDataWhenStatusError: true,
-      connectTimeout: Duration(minutes: 20),
-      receiveTimeout: Duration(seconds: 50),
+      connectTimeout: Duration(seconds: 60),
+      receiveTimeout: Duration(seconds: 60),
       responseType: ResponseType.json,
       headers: headers,
     ));
   }
 
-  ///Login
-  Future login({
-    required String email,
-    required String password,
+  /// Post
+
+  Future<Response> postData({
+    required String url,
+     Map<String, dynamic>? body,
+     Map<String, dynamic>? queryParams,
   }) async {
-    LoginModel model = LoginModel();
+    final response =
+        await dio!.post(url, data: body, queryParameters: queryParams);
 
-    try {
-      var response = await dio!.post(
-        "login",
-        data: {
-          "email": email,
-          "password": password,
-        },
-      );
-
-      model = LoginModel.fromJson(response.data);
-      print("==============================================================" +
-          response.data.toString());
-      if (model.status == false) {
-        Get.snackbar(model.message ?? "", "", backgroundColor: Colors.red);
-      } else {
-        Get.offAll(MainScreen());
-      }
-    } catch (e) {
-      print(e);
-    }
+    return response;
   }
 
+  /// Get
+  Future<Response> getData({
+    required String url,
+     Map<String, dynamic>? body,
+  }) async {
+    final response = await dio!.get(url, data: body);
 
-  // Future fetchData() async {
-  //   const url = "https://jsonplaceholder.typicode.com/posts";
-  //   final response = await dio!.get(url);
-  //   final myData = response.data;
-  //   List apiList = [];
-  //   //
-  //   // for (var item in myData) {
-  //   //   final post = PostModel.fromJson(item);
-  //   //
-  //   //   apiList.add(post);
-  //   //
-  //   // }
-  //
-  //   apiList = myData.map((item) => PostModel.fromJson(item)).toList();
-  //
-  //   developer.log(apiList.toString());
-  // }
+    return response;
+  }
 
+  /// Put
 
+  /// Patch
 
-
-
+  /// Delete
 }
-
-Map<String, dynamic> headers = {
-  "Accept": "application/json",
-  "Content-Type": "application/json",
-};
