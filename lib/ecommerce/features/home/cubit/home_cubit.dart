@@ -16,6 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
   ProductsModel productsModel = ProductsModel();
 
   Future getBanners() async {
+
     emit(HomeBannerLoading());
 
     try {
