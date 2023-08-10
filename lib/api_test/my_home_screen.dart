@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,10 +14,10 @@ class MyHomeScreen extends StatefulWidget {
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
   bool isLoading = false;
-
+  List<PostModel> apiList = [];
   @override
   void initState() {
-    getDateFromApi();
+    fetchData();
     super.initState();
   }
 
@@ -29,7 +30,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
-              itemCount: apiList?.length,
+              itemCount: apiList.length,
               itemBuilder: (context, index) => Container(
                     height: 200,
                     width: 300,
@@ -38,15 +39,16 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(apiList?[index].title ?? "",style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.red
-                          ),),
-                          Text(apiList?[index].body ?? "",style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey
-                          ),),
+                          Text(
+                            apiList[index].title ?? "",
+                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          ),
+                          Text(
+                            apiList[index].body ?? "",
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
                         ],
                       ),
                     ),
@@ -54,30 +56,33 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
     );
   }
 
-  Future<void> getDateFromApi() async {
+  Future fetchData() async {
     isLoading = true;
     setState(() {});
 
+    final url = Uri.parse("https://jsonplaceholder.typicode.com/posts");
 
     var client = http.Client();
-    var response = await http.get(
-      Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-    );
 
+    final response = await client.get(url);
 
-    var body = json.decode(response.body);
+    final myData = json.decode(response.body) as List;
 
-    for(var i in body){
-      apiList.add(PostModel.fromJson(i));
-    }
+    //
+    // for (var item in myData) {
+    //   final post = PostModel.fromJson(item);
+    //
+    //   apiList.add(post);
+    //
+    // }
 
-    // apiList = body.map((element) => PostModel.fromJson(element)).toList();
+    apiList = myData.map((item) => PostModel.fromJson(item)).toList();
 
-    print(response.body);
-
+    developer.log(apiList.toString());
     isLoading = false;
     setState(() {});
   }
 }
 
-List<dynamic> apiList = [];
+
+
