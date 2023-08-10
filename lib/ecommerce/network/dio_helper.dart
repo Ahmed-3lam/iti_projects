@@ -10,14 +10,16 @@ class DioHelper {
   };
 
   static init() {
-    dio = Dio(BaseOptions(
-      baseUrl: 'https://student.valuxapps.com/api/',
-      receiveDataWhenStatusError: true,
-      connectTimeout: Duration(seconds: 60),
-      receiveTimeout: Duration(seconds: 60),
-      responseType: ResponseType.json,
-      headers: headers,
-    ));
+    dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://student.valuxapps.com/api/',
+        receiveDataWhenStatusError: true,
+        connectTimeout: Duration(seconds: 60),
+        receiveTimeout: Duration(seconds: 60),
+        responseType: ResponseType.json,
+        headers: headers,
+      ),
+    );
   }
 
   /// Post
@@ -35,8 +37,16 @@ class DioHelper {
 
   /// Get
   Future<Response> getData({
+
+
+
+
     required String url,
     Map<String, dynamic>? body,
+
+
+
+
   }) async {
     final response = await dio!.get(url, data: body);
 
