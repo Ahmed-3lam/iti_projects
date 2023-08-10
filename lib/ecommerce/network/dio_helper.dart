@@ -38,8 +38,7 @@ class DioHelper {
   /// Get
   Future<Response> getData({
 
-
-
+String? dummyData,
 
     required String url,
     Map<String, dynamic>? body,
