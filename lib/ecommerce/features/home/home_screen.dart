@@ -1,29 +1,26 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iti_projects/ecommerce/features/home/cubit/home_cubit.dart';
+import 'package:iti_projects/ecommerce/features/home/model/ProductsModel.dart';
 import 'package:iti_projects/ecommerce/product_details/product_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   @override
   void initState() {
     super.initState();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: _buildAppBar(),
@@ -33,11 +30,26 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               _banner(),
-              _buildCollection(title: "Popular Pack"),
+              BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  final productsList =
+                      context.read<HomeCubit>().productsModel.data?.data;
+
+                  if (state is HomeProductsLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return _buildCollection(
+                      title: "Popular Pack", productsList: productsList);
+                },
+              ),
               SizedBox(
                 height: 20,
               ),
-              _buildCollection(title: "Our New Item"),
+              _buildCollection(
+                title: "Our New Item",
+              ),
             ],
           ),
         ),
@@ -47,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Column _buildCollection({
     required String title,
+    List<MyProductData>? productsList,
   }) {
     return Column(
       children: [
@@ -72,67 +85,80 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(
           height: 10,
         ),
-        Container(
-          height: 220,
-          child: ListView.builder(
-            itemCount: 10,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => _productItem(),
+        if (productsList != null)
+          Container(
+            height: 250,
+            child: ListView.builder(
+              itemCount: productsList!.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) =>
+                  _productItem(productsList[index]),
+            ),
           ),
-        ),
       ],
     );
   }
 
-  Widget _productItem() {
+  Widget _productItem(
+    MyProductData product,
+  ) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const ProductDetailsScreen(),
+            builder: (context) => ProductDetailsScreen(
+              title: product.name!,
+              description: product.description!,
+              image: product.image!,
+            ),
           ),
         );
       },
       child: Container(
-        height: 205,
+        // height: 205,
         width: 184,
-        margin: const EdgeInsets.only(right: 20,),
+
+        margin: const EdgeInsets.only(
+          right: 20,
+        ),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
+          color: Colors.white,
           border: Border.all(
             color: Colors.grey.withOpacity(.2),
           ),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-              "assets/images/product1.png",
+            Image.network(
+              product.image ?? "",
               height: 90,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Row(
-              children: [
-                Text(
-                  "Bundle Pack",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 4,
             ),
             Row(
               children: [
                 Container(
                   width: 140,
-                  child: const Text(
-                    "hggggggggkkkkkkkkkkkkkgggggggggg",
+                  child: Text(
+                    product.name ?? "",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: 140,
+                  height: 50,
+                  child: Text(
+                    product.description ?? "",
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontSize: 14,
@@ -143,13 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            const Row(
+            Row(
               children: [
                 Text(
-                  "\$35",
+                  "EGP ${product.price!}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -158,13 +181,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   width: 4,
                 ),
-                Text(
-                  "50.32",
-                  style: TextStyle(
-                    decoration: TextDecoration.lineThrough,
-                    fontSize: 12,
+                if (product.discount != 0)
+                  Text(
+                    " ${product.discount!}",
+                    style: TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
                 Spacer(),
                 InkWell(
                   onTap: null,
@@ -186,9 +210,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _banner() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
-      child: Image.asset("assets/images/banner.png"),
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        final cubit = context.read<HomeCubit>();
+        if (state is HomeBannerLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(cubit.bannerModel.data?[3].image ?? "")),
+        );
+      },
     );
   }
 
