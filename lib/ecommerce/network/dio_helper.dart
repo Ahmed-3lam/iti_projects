@@ -37,8 +37,6 @@ class DioHelper {
 
   /// Get
   Future<Response> getData({
-
-String? Image4,
     String? image2,
     String? image,
     required String url,
